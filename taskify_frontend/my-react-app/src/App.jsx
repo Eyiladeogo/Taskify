@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import taskifyLogo from './assets/taskify.svg'
 import './App.css'
+import Footer from './Footer';
+import Button from './Button';
 
 const date = new Date().getFullYear();
 
@@ -18,20 +20,10 @@ function App() {
           Gain insights and optimize your productivity with Taskify's powerful analytics tools.
         </p>
         <div className="card">
-          <a href="">
-            <button className='left-button'>
-              Sign In
-            </button>
-          </a>
-          <a href="">
-            <button>
-                Sign Up
-            </button>
-          </a>
+          <Button className = "left-button" link = "" text = "Sign In"/>
+          <Button link= "" text= "Sign Up"/>
         </div>
-      <footer>
-        Adedayo Eyiladeogo &copy; {date}
-      </footer>
+      <Footer />
     </>
   )
 }
