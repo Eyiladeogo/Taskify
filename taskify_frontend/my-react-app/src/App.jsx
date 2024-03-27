@@ -3,8 +3,7 @@ import taskifyLogo from './assets/taskify.svg'
 import './App.css'
 import Footer from './Footer';
 import Button from './Button';
-
-const date = new Date().getFullYear();
+import React from 'react';
 
 
 function App() {
@@ -20,8 +19,8 @@ function App() {
           Gain insights and optimize your productivity with Taskify's powerful analytics tools.
         </p>
         <div className="card">
-          <Button className = "left-button" link = "" text = "Sign In"/>
-          <Button link= "" text= "Sign Up"/>
+          <Button className = "left-button" text = "Sign In"/>
+          <Button text= "Sign Up"/>
         </div>
       <Footer />
     </>

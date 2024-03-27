@@ -29,7 +29,7 @@ body {
   /* place-items: left; */
   min-width: 100vw;
   min-height: 100vh;
-  background-image: url('../public/landing-page-bg.png');
+  background-image: url('/landing-page-bg.png');
 }
 
 h1 {
