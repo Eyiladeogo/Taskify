@@ -13,6 +13,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+
+footer{
+  font-weight: 500;
+  color: #646cff;
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  min-width: 100vw;
+  padding: 12px 0px;
+  background-color:#242424
+}
+
+footer:hover {
+  color: #535bf2;
+}
+
 /* a {
   font-weight: 500;
   color: #646cff;
@@ -29,7 +47,8 @@ body {
   /* place-items: left; */
   min-width: 100vw;
   min-height: 100vh;
-  background-image: url('/landing-page-bg.png');
+  background-color: #dfa443;
+  background-image: none;
 }
 
 h1 {

@@ -1,11 +1,9 @@
-import React from "react";
-import './App.css'
+import './css/index.css'
+import './css/App.css'
 
 function Button(props) {
   return (
-    <a href={props.link}>
       <button className={props.className}>{props.text}</button>
-    </a>
   );
 }
 

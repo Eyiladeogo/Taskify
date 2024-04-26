@@ -1,13 +1,14 @@
-import { useState } from 'react'
 import taskifyLogo from './assets/taskify.svg'
-import './App.css'
+import './css/index.css'
+import './css/App.css'
+import './css/button.css'
 import Footer from './Footer';
 import Button from './Button';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 
-function App() {
-  const [count, setCount] = useState(0)
+function LandingPage() {
 
   return (
     <>
@@ -19,12 +20,18 @@ function App() {
           Gain insights and optimize your productivity with Taskify's powerful analytics tools.
         </p>
         <div className="card">
+          <Link style={{display: "inline-block"}} to="/login">
           <Button className = "left-button" text = "Sign In"/>
-          <Button text= "Sign Up"/>
+          </Link>
+          <Link style={{display: "inline-block"}} to="/register">
+          <Button className="right-button" text= "Sign Up"/>
+          </Link>
+          
+          
         </div>
       <Footer />
     </>
   )
 }
 
-export default App
+export default LandingPage
