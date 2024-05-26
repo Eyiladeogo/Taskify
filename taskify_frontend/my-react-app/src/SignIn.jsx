@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import './css/index.css'
+import './css/login.css'
+import Footer from './Footer';
+import view from './assets/view-password.svg'
+import hide from './assets/hide-password.svg'
 
 
 function SignIn(){
     const [formData, setFormData] = useState(
         {
-            username: '',
+            emailorUsername: '',
             password: ''
         }
     );
+    const [errorExists, setErrorExists] = useState(false);
+    const [viewPassword, setViewPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -19,31 +24,39 @@ function SignIn(){
 
       const handleSubmit = async (e) => {
         e.preventDefault();
+        
         setFormData({ ...formData, [e.target.name]: e.target.value });
         console.log(`FORM DATA :${JSON.stringify(formData)}`)
+        
         try {
           const response = await axios.post('http://localhost:6969/auth/login', formData);
           console.log(response.data);
-           // Assuming your backend returns a token upon successful login
-          // Redirect to the home page upon successful login
-          // You can use React Router's useHistory hook for this purpose
-          navigate('/home');
+          setErrorExists(false)
+          localStorage.setItem('token', response.data);
+          navigate('/tasks');
         } catch (error) {
+          setErrorExists(true)
           console.error('Login failed:', error);
         }
       };
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username or Email Address</label> <br/>
-                <input type="text" id="username" name="username" placeholder="Username or Email Address"></input><br/><br/>
+          <div className='signin-container'>
+            <form onSubmit={handleSubmit} onChange={handleChange} className='signin-form'>
+                <label htmlFor="emailorUsername">Username or Email Address</label> <br/>
+                <input type="text" id="emailorUsername" name="emailorUsername" placeholder="Username or Email Address" ></input><br/><br/>
 
                 <label htmlFor="password">Password</label><br/>
-                <input type="password" id="password" name="password" placeholder="Password"></input><br/>
+                <input type={viewPassword?'text':"password"} id="password" name="password" placeholder="Password"></input><img src={viewPassword?hide:view} style={{height:"20px", width:"20px"}} onClick={() => setViewPassword(!viewPassword)}/><br/>
 
                 <input type="submit" value="Submit"></input>
+                {errorExists && <h3>Incorrect Username or Password</h3>}
             </form>
+          </div>
+
+          <Footer/>
+            
         </>
     )
 

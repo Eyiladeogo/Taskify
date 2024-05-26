@@ -5,6 +5,10 @@
   text-align: left;
 }
 
+body{
+  background-image: url('/landing-page-bg.png');
+}
+
 .logo {
   height: 15em;
   padding: 1.5em 1.5em 1.5em 8.8em;
@@ -38,13 +42,10 @@
   }
 }
 
-.card {
+/* .card {
   padding: 0em;
-}
+} */
 
-body{
-  background-image: url('/landing-page-bg.png');
-}
 
 .left-button{
   border-radius: 8px;
@@ -57,11 +58,20 @@ body{
   background-color: #1e488f;
   cursor: pointer;
   transition: border-color 0.3s ease, background-color 0.3s ease;
+  width: 10em;
+} 
+
+.left-link{
   margin-left: 5em;
   margin-right: 1em;
-  width: 10em; 
   display: inline-block; 
 }
+
+.right-link{
+  margin-left: 1.5em;
+  display: inline-block; 
+}
+
 
 .right-button{
   border-radius: 8px;
@@ -74,8 +84,5 @@ body{
   background-color: #1e488f;
   cursor: pointer;
   transition: border-color 0.3s ease, background-color 0.3s ease;
-  margin-left: 5em;
-  margin-right: 1em;
-  width: 10em;  
-  display: inline-block; 
+  width: 10em; 
 }

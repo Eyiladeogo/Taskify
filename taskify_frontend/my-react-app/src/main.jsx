@@ -8,6 +8,9 @@ import Register from './Register';
 import Profile from './Profile.jsx';
 import Analytics from './Analytics.jsx';
 import Tasks from './Tasks.jsx';
+import TaskModal from './TaskModal.jsx';
+import ModalPage from './Modal.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
@@ -31,10 +34,19 @@ const router = createBrowserRouter([
     element: <Tasks />,
   },
   {
+    path: "/taskmodal",
+    element: <TaskModal />,
+  },
+  {
+    path: "/fakemodal",
+    element: <ModalPage />,
+  },
+  {
     path: "/analytics",
     element: <Analytics />,
   }
 ])
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,5 +1,4 @@
 import './css/index.css'
-import './css/App.css'
 
 function Button(props) {
   return (

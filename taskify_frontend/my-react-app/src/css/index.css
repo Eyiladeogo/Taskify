@@ -13,8 +13,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 footer{
   font-weight: 500;
   color: #646cff;
@@ -47,8 +45,10 @@ body {
   /* place-items: left; */
   min-width: 100vw;
   min-height: 100vh;
-  background-color: #dfa443;
+  background-color: #fac45c;
+  /* Linear gradient 135, #fac45c, cd963c*/
   background-image: none;
+  
 }
 
 h1 {
@@ -68,9 +68,9 @@ p{
   font-style: normal;
   color: black;
   display: inline-block;
-  width: 21em;
+  width: 30em;
   text-align: center;
-  padding-left: 5em;
+  padding-left: 8.8em;
 }
 
 
@@ -86,3 +86,42 @@ p{
     background-color: #1e488f;
   }
 }
+
+/* SIGN IN FORM */
+
+
+
+
+/* REGISTER FORM */
+
+
+
+
+
+/* button styling */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: white;
+  background-color: #1e488f;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  width: 10em;
+}
+
+
+button:hover {
+  border-color: 2px solid #214e99;
+  background-color: #275db9;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+
