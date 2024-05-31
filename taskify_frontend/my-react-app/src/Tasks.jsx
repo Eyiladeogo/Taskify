@@ -55,6 +55,7 @@ function Tasks(){
     const [tasks, setTasks] = useState()
     const [shouldFetchTasks, setShouldFetchTasks] = useState(false);
     const [showCompleted, setShowCompleted] = useState(false)
+    const [currentTask, setCurrentTask] = useState()
 
     const navigate = useNavigate()
 
@@ -83,7 +84,7 @@ useEffect(() => {
         try {
             const response = await api.get(endpoint);
         // const data = await response.json();
-        setTasks(response.data);
+            setTasks(response.data);
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
@@ -114,15 +115,17 @@ useEffect(() => {
 
     const handleAddTask = async (taskData) => {
         try {
-            // console.log(`The formatted task data going into the request is ${taskData.priority}`)
-            const response = await api.post('/tasks', taskData);
-            if (response.status === 201) {
-                setShouldFetchTasks(true); // Trigger re-fetching tasks
-                setIsModalOpen(false);}
-                else {
-                    console.error('Failed to add task');
-                    alert('Failed to add task');
-                }
+            if (currentTask){
+                await api.put(`/tasks/${currentTask.task_id}`, taskData)
+            }
+            else{
+                await api.post('/tasks', taskData);
+            }
+            
+            setShouldFetchTasks(true); // Trigger re-fetching tasks
+            setIsModalOpen(false);
+                
+                
         } catch (error) {
             console.error('Error adding task:', error);
         }
@@ -154,9 +157,9 @@ useEffect(() => {
         
     }
 
-    async function handleUpdateTask(){
+    // async function handleUpdateTask(){
 
-    }
+    // }
 
     async function handleCompleteTask(id){
         try {
@@ -179,17 +182,17 @@ useEffect(() => {
             
             
             {isModalOpen &&(
-                    <TaskModal onClose={toggleModal} onAddTask={handleAddTask}></TaskModal>
+                    <TaskModal onClose={toggleModal} onAddTask={handleAddTask} task={currentTask}></TaskModal>
             )}
             {tasks ? <>
             <div className="tasks-list">
             <button onClick={() => setShowCompleted(!showCompleted)}>
                     {showCompleted ? 'Show Pending Tasks' : 'Show Completed Tasks'}
                 </button>
-                {tasks.map((task)=><TaskDetail key={task.task_id} task={task} onDelete={handleDeleteTask} onUpdate={handleUpdateTask} onComplete={handleCompleteTask} onFetchTask={fetchTasks}/> )}
+                {tasks.map((task)=><TaskDetail key={task.task_id} task={task} onDelete={handleDeleteTask} onEdit={toggleModal} onComplete={handleCompleteTask} onFetchTask={fetchTasks} setCurrentTask={setCurrentTask} showCompleted={showCompleted}/> )}
             </div><div>Length of tasks is {tasks.length}</div>
             </>: <p>No Tasks Yet</p>}
-            {/* <button onClick={toggleModal} style={{position:"fixed", left:"50%",transform: "translateX(-50%)",bottom: "20px",zIndex: 1000}}>Add Task</button> */}
+            {!showCompleted?<button className="add-task" onClick={toggleModal} style={{position:"fixed", left:"50%",transform: "translateX(-50%)",bottom: "20px",zIndex: 1000} }>Add Task</button>:null}
         </>
     )
 }

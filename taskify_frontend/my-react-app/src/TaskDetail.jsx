@@ -34,7 +34,7 @@ function ProgressBar({percentage}){
     )
 }
 
-function TaskDetail({ task, onDelete, onUpdate, onComplete, onFetchTask }) {
+function TaskDetail({ task, onDelete, onEdit, onComplete, onFetchTask, setCurrentTask, showCompleted }) {
 
     function timeStringToSeconds(timeString) {
         const [hours, minutes, seconds] = timeString.split(':').map(Number);
@@ -54,15 +54,21 @@ function TaskDetail({ task, onDelete, onUpdate, onComplete, onFetchTask }) {
       }
 
     const [percentage, setPercentage] = useState(0)
+    const [isPlaying,setIsPlaying] = useState(false)
 
-    useEffect(()=>setPercentage(calculateProgress(task.time_spent, task.task_duration)),[percentage])
+    useEffect(()=>setPercentage(calculateProgress(task.time_spent, task.task_duration)),[percentage, isPlaying])
     
+    function toggleIsPlaying(){
+        setIsPlaying(!isPlaying)
+    }
+
 
     async function handlePlay(id){
         try {
             const response = await api.post(`/tasks/${id}/start`)
             if (response.status === 200){
-                alert("Timer started successfully")
+                // alert("Timer started successfully")
+                toggleIsPlaying()
             }
             else{
                 console.error('Failed to start timer');
@@ -77,8 +83,10 @@ function TaskDetail({ task, onDelete, onUpdate, onComplete, onFetchTask }) {
         try {
             const response = await api.post(`/tasks/${id}/pause`)
             if (response.status === 200){
-                alert("Timer paused successfully")
+                // alert("Timer paused successfully")
+                toggleIsPlaying()
                 onFetchTask('/tasks')
+                
             }
             else{
                 console.error('Failed to pause timer');
@@ -87,6 +95,12 @@ function TaskDetail({ task, onDelete, onUpdate, onComplete, onFetchTask }) {
             console.error('Error pausing timer:', error);
         }
     }
+
+    function handleEdit(){
+        onEdit()
+        setCurrentTask(task)
+    }
+
 
 
   return (
@@ -109,18 +123,21 @@ function TaskDetail({ task, onDelete, onUpdate, onComplete, onFetchTask }) {
                             <p>Created At: {new Date(task.created_at).toLocaleDateString()}</p>
                             
                         </div>
-                        <button onClick={() => onComplete(task.task_id)}>Mark as Completed</button>
+                        {!showCompleted?<>
+                            <button onClick={() => onComplete(task.task_id)}>Mark as Completed</button>
+                            <button onClick={handleEdit}>Edit</button>
+                        </>:null}
                         
                         
                     </div>
                 {/* </div> */}
-                <div className='play-pause' style={{display:"flex", gap:"20px", justifyContent:"center"}}>
+                {!showCompleted?<div className='play-pause' style={{display:"flex", gap:"20px", justifyContent:"center"}}>
                     <div>
                         {task.time_spent}
                     </div>
-                    <span><img src={play} style={{height:"20px", width:"20px"}} onClick={()=>handlePlay(task.task_id)}/></span>
-                    <span><img src={pause} style={{height:"20px", width:"20px"}} onClick={()=>handlePause(task.task_id)}/></span>
-                </div>
+                    <span><img src={isPlaying?pause:play} style={{height:"20px", width:"20px"}} onClick={isPlaying?()=>handlePause(task.task_id):()=>handlePlay(task.task_id)}/></span>
+                    {/* <span><img src={pause} style={{height:"20px", width:"20px"}} onClick={()=>handlePause(task.task_id)}/></span> */}
+                </div>:null}
             </div>
         // </div>
     // </div>

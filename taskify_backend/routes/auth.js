@@ -7,10 +7,17 @@ import db from "../middleware/database.js";
 const router = express.Router()
 
 router.post('/login', (req, res)=>{
-    const {email, username, password} = req.body;
-    const values = [email, username]
+    const {emailorUsername, password} = req.body;
+    // const values = [email, username]
+
+    let query
+    if (emailorUsername.includes('@')){
+        query = 'SELECT * FROM users WHERE email = ?';
+    } else {
+        query = 'SELECT * FROM users WHERE username = ?';
+    }
     db.query(
-        'SELECT * FROM users WHERE email = ? OR username = ?', values, (err, results) =>{
+        query, emailorUsername, (err, results) =>{
             if (err){
                 console.error(err);
                 res.status(500).json('Error logging in!');

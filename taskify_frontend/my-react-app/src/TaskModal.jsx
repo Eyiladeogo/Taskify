@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/taskmodal.css'
 
-function TaskModal({ onClose, onAddTask }) {
+function TaskModal({ onClose, onAddTask, task }) {
   const [taskData, setTaskData] = useState({
     taskName: '',
     taskDuration: { hours: 0, minutes: 0, seconds: 0 },
     dueDate: '',
     priority: 'Low',
   });
+
+  useEffect(() => {
+    if (task) {
+        // console.log(`Task entering modal window: ${task}`);
+        setTaskData({
+            taskName: task.task_name,
+            taskDuration: parseDuration(task.task_duration), // Assuming task.duration is a string like "1:30:0"
+            dueDate: task.due_date.split('T')[0],
+            priority: task.priority,
+        });
+    }
+}, [task]);
+
+const parseDuration = (duration) => {
+    const [hours, minutes, seconds] = duration.split(':').map(Number);
+    return { hours, minutes, seconds };
+};
 
   // const handleChange = (e) => {
   //   setTaskData({ ...taskData, [e.target.name]: e.target.value });
@@ -109,6 +126,7 @@ function TaskModal({ onClose, onAddTask }) {
                 </div>
                 
               </div>
+              {/* {task?<p>Task was sent</p>:<p>Task wasnt sent</p>} */}
               <div className="form-group">
                 <label htmlFor="dueDate">Due Date:</label>
                 <input
@@ -135,7 +153,7 @@ function TaskModal({ onClose, onAddTask }) {
                 </select>
               </div>
               <button type="submit" className="btn btn-primary">
-                Add Task
+                Save
               </button>
             </form>
           </div>
