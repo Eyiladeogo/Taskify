@@ -13,26 +13,24 @@ function LandingPage() {
   return (
     <div className='parent'>
       <div className='group'>
-      <div className='landing-page-wrapper'>
-        <div className="logo-container">
+        <div className='landing-page-wrapper'>
+          <div className="logo-container">
             <img src={taskifyLogo} className="logo" alt="Taskify logo" />
+          </div>
+          <h1>Taskify</h1>
+          <p>
+            Gain insights and optimize your productivity with Taskify's powerful analytics tools.
+          </p>
+          <div >
+            <Link className='left-link' to="/login">
+            <Button className = "left-button" text = "Sign In"/>
+            </Link>
+            <Link className='right-link' to="/register">
+            <Button className="right-button" text= "Sign Up"/>
+            </Link>          
+          </div>    
         </div>
-        <h1 style={{paddingLeft:"4em"}}>Taskify</h1>
-        <p>
-          Gain insights and optimize your productivity with Taskify's powerful analytics tools.
-        </p>
-        <div >
-          <Link className='left-link' to="/login">
-          <Button className = "left-button" text = "Sign In"/>
-          </Link>
-          <Link className='right-link' to="/register">
-          <Button className="right-button" text= "Sign Up"/>
-          </Link>
-          
-          
-        </div>
-      <Footer />
-    </div>
+        <Footer />
       </div>
     </div>
     

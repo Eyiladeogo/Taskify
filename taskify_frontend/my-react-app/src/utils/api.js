@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:6969', // Replace with your backend base URL
+  baseURL: 'https://rocky-dusk-48099-109466645bc6.herokuapp.com/', // Replace with your backend base URL
   headers: {
     'Content-Type': 'application/json',
   },

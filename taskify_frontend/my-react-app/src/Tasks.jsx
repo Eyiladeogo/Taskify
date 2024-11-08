@@ -71,16 +71,17 @@ useEffect(() => {
     if (decodedToken.exp < currentTime) {
       // Token is expired, clear token from local storage and redirect to sign-in page
       localStorage.removeItem('token');
-      navigate('/login');
+      navigate('/');
     }
   } else {
     // Token doesn't exist, redirect to sign-in page
-    navigate('/login');
+    navigate('/');
   }
 }, [navigate]);
 
 
     async function fetchTasks(endpoint){
+        
         try {
             const response = await api.get(endpoint);
         // const data = await response.json();
@@ -111,6 +112,7 @@ useEffect(() => {
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
+        setCurrentTask(null)
     };
 
     const handleAddTask = async (taskData) => {
@@ -184,15 +186,22 @@ useEffect(() => {
             {isModalOpen &&(
                     <TaskModal onClose={toggleModal} onAddTask={handleAddTask} task={currentTask}></TaskModal>
             )}
-            {tasks ? <>
-            <div className="tasks-list">
-            <button onClick={() => setShowCompleted(!showCompleted)}>
+            {!showCompleted?<button className="add-task" onClick={toggleModal} style={{ transform: "translateX(65%)",bottom: "20px",zIndex: 1000} }>Add Task</button>:null}
+            <div className="task-switcher">
+            
+                    <button className={showCompleted?'completed':'pending'} onClick={() => setShowCompleted(!showCompleted)}>
                     {showCompleted ? 'Show Pending Tasks' : 'Show Completed Tasks'}
-                </button>
+                     </button>
+                </div>
+            {tasks?.length > 0 ? <>
+                
+            <div className="tasks-list">
+            
+            
                 {tasks.map((task)=><TaskDetail key={task.task_id} task={task} onDelete={handleDeleteTask} onEdit={toggleModal} onComplete={handleCompleteTask} onFetchTask={fetchTasks} setCurrentTask={setCurrentTask} showCompleted={showCompleted}/> )}
-            </div><div>Length of tasks is {tasks.length}</div>
-            </>: <p>No Tasks Yet</p>}
-            {!showCompleted?<button className="add-task" onClick={toggleModal} style={{position:"fixed", left:"50%",transform: "translateX(-50%)",bottom: "20px",zIndex: 1000} }>Add Task</button>:null}
+            </div>
+            </>: <p style={{fontSize:"3.5em", textAlign:"center",color:"#ff6347", marginTop:"20%"}}>Add a New Task</p>}
+            
         </>
     )
 }

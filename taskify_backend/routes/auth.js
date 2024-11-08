@@ -2,8 +2,10 @@ import express from "express";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import db from "../middleware/database.js";
+import { config } from 'dotenv';
 
 
+config({path: '../.env'});
 const router = express.Router()
 
 router.post('/login', (req, res)=>{
@@ -31,7 +33,7 @@ router.post('/login', (req, res)=>{
             
                 if (bcrypt.compareSync(password, user.password)){
                     try {
-                        const token = jwt.sign({userId:user.id, username:user.username}, '$2b$10$SLL2HpUBxYQDTf.qI6jLF.DkB/WCMbzmG5uihwc3zK6EqRYcHrTiq', {expiresIn: '1h'})
+                        var token = jwt.sign({userId:user.id, username:user.username}, process.env.JWT_SECRET, {expiresIn: '1h'})
                         res.status(200).json(token);
                     } catch (error) {
                         console.error(`JWT Signing error:\n${error}`)
@@ -57,15 +59,21 @@ router.post('/register', (req, res)=>{
     const hashedPassword = bcrypt.hashSync(password, 10)
     const user = {email, username:username, password: hashedPassword}
     db.query(
-        'INSERT INTO users SET ?', user, (err) =>{
+        'INSERT INTO users SET ?', user, (err, result) =>{
             if (err){
                 console.log(err);
                 res.status(500).json(`Error registering user ${user.username}`)
             }
-            else{
-                const token = jwt.sign({userId:user.id, username:user.username}, '$2b$10$SLL2HpUBxYQDTf.qI6jLF.DkB/WCMbzmG5uihwc3zK6EqRYcHrTiq', {expiresIn: '1h'})
+
+            const userId = result.insertId
+            try {
+                var token = jwt.sign({userId:userId, username:user.username}, process.env.JWT_SECRET, {expiresIn: '1h'})
                 res.status(201).json(token)
+            } catch (error) {
+                console.error(`JWT Signing error:\n${error}`);
+                return res.status(500).json(`JWT Signing error: ${error}`);
             }
+            
         }
     )
 })

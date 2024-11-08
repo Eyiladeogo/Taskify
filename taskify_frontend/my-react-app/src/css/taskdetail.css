@@ -58,10 +58,34 @@
     justify-content: space-between;
   }
 
-  .add-task{
-    opacity: 0.5;
+  .task-switcher {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    
   }
-
-  .add-task:hover{
+  
+  .task-switcher button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button.completed {
+    background-color: #27251b; /* Green */
+    color: #fac45c;
+  }
+  
+  button.pending {
+    background-color: #fac45c; /* Orange */
+    color: #27251b;
+  }
+  
+  .task-switcher button:hover {
+    background-color: #e6e7ee;
+    color: #27251b; /* Navbar color */
     opacity: 0.8;
   }
+  

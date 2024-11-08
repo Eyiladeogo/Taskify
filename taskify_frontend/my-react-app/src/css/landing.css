@@ -8,6 +8,11 @@
   .landing-page-wrapper{
     background-image: url('/landing-page-bg.png');
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1em;
   }
   
   .logo {
@@ -82,6 +87,12 @@
     width: 10em;
     margin-left: 3em;
   } 
+
+  h1 {
+    /* font-size: 2em; */
+    padding-left: 4em;
+    /* text-align: center; */
+  }
   
   .left-link{
     margin-left: 5em;
@@ -109,3 +120,50 @@
     width: 10em; 
   }
   
+
+  @media (max-width: 768px) {
+    .landing-page-wrapper {
+      padding: 1em;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .logo {
+      height: 10em;
+      padding: 1.5em 0;
+    }
+  
+    .logo-container {
+      padding-left: 0;
+    }
+  
+    h1 {
+      font-size: 2em;
+      padding-left: 0;
+      text-align: center;
+    }
+
+    .left-link,
+  .right-link {
+    margin: 0.5em;
+  }
+  
+    p {
+      font-size: 1em;
+      width: 90%;
+      text-align: center;
+      padding-left: 0;
+    }
+  
+    
+    .right-button {
+      width: 8em;
+      font-size: 0.9em;
+    }
+
+    .left-button{
+      margin-left: 0;
+      width: 8em;
+      font-size: 0.9em;
+    }
+  }

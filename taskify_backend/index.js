@@ -1,11 +1,13 @@
 import bodyParser from "body-parser";
 import express from "express";
 import cors from 'cors';
+import { config } from 'dotenv';
 
 import {router as authRoute} from "./routes/auth.js";
 import {router as tasksRoute} from "./routes/tasks.js";
 
-const PORT = 6969;
+config({path: '../.env'});
+const PORT = process.env.PORT || 6969;
 const app = express();
 
 app.listen(PORT, (err)=>{

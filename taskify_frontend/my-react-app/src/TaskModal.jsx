@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './css/taskmodal.css'
 
-function TaskModal({ onClose, onAddTask, task }) {
+function TaskModal({ onClose, onAddTask, task, }) {
   const [taskData, setTaskData] = useState({
     taskName: '',
-    taskDuration: { hours: 0, minutes: 0, seconds: 0 },
+    taskDuration: { hours: '', minutes: '', seconds: '' },
     dueDate: '',
     priority: 'Low',
   });
@@ -54,6 +54,7 @@ const parseDuration = (duration) => {
   const handleSubmit = (e) => { /*understand this too*/
     e.preventDefault();
     const { hours=0, minutes=0, seconds=0 } = taskData.taskDuration;
+
     // console.log(minutes)
     const durationString = `${hours}:${minutes}:${seconds}`;
     const formattedTaskData = { ...taskData, taskDuration: durationString };

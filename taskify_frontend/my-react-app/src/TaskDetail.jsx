@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './css/taskdetail.css'
 import del from './assets/delete.svg'
-import play from './assets/play.svg'
-import pause from './assets/pause.svg'
+import Timer from './Timer';
+import check from './assets/checkbox-check.svg'
+import uncheck from './assets/checkbox-uncheck.svg'
+import edit from './assets/edit.svg'
 import api from './utils/api';
 
 import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
@@ -55,51 +57,54 @@ function TaskDetail({ task, onDelete, onEdit, onComplete, onFetchTask, setCurren
 
     const [percentage, setPercentage] = useState(0)
     const [isPlaying,setIsPlaying] = useState(false)
+    const [completed, setIsCompleted] = useState(false)
 
-    useEffect(()=>setPercentage(calculateProgress(task.time_spent, task.task_duration)),[percentage, isPlaying])
+    useEffect(()=>setPercentage(calculateProgress(task.time_spent, task.task_duration)),[percentage, isPlaying, task.time_spent, task.task_duration])
     
-    function toggleIsPlaying(){
-        setIsPlaying(!isPlaying)
-    }
+    // function toggleIsPlaying(){
+    //     setIsPlaying(!isPlaying)
+    // }
 
 
-    async function handlePlay(id){
-        try {
-            const response = await api.post(`/tasks/${id}/start`)
-            if (response.status === 200){
-                // alert("Timer started successfully")
-                toggleIsPlaying()
-            }
-            else{
-                console.error('Failed to start timer');
-            }
-        } catch (error) {
-            console.error('Error starting timer:', error);
-        }
+    // async function handlePlay(id){
+    //     try {
+    //         const response = await api.post(`/tasks/${id}/start`)
+    //         if (response.status === 200){
+    //             // alert("Timer started successfully")
+    //             toggleIsPlaying()
+    //         }
+    //         else{
+    //             console.error('Failed to start timer');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error starting timer:', error);
+    //     }
         
-    }
+    // }
 
-    async function handlePause(id){
-        try {
-            const response = await api.post(`/tasks/${id}/pause`)
-            if (response.status === 200){
-                // alert("Timer paused successfully")
-                toggleIsPlaying()
-                onFetchTask('/tasks')
+    // async function handlePause(id){
+    //     try {
+    //         const response = await api.post(`/tasks/${id}/pause`)
+    //         if (response.status === 200){
+    //             // alert("Timer paused successfully")
+    //             toggleIsPlaying()
+    //             onFetchTask('/tasks')
                 
-            }
-            else{
-                console.error('Failed to pause timer');
-            }
-        } catch (error) {
-            console.error('Error pausing timer:', error);
-        }
-    }
+    //         }
+    //         else{
+    //             console.error('Failed to pause timer');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error pausing timer:', error);
+    //     }
+    // }
 
     function handleEdit(){
         onEdit()
         setCurrentTask(task)
     }
+
+
 
 
 
@@ -124,20 +129,28 @@ function TaskDetail({ task, onDelete, onEdit, onComplete, onFetchTask, setCurren
                             
                         </div>
                         {!showCompleted?<>
-                            <button onClick={() => onComplete(task.task_id)}>Mark as Completed</button>
-                            <button onClick={handleEdit}>Edit</button>
+                            <img src={!completed?uncheck:check} onClick={() => onComplete(task.task_id)} style={{height:"20px", width:"20px"}} />
+                            <img src={edit} onClick={handleEdit} style={{height:"20px", width:"20px"}}/>
                         </>:null}
                         
                         
                     </div>
                 {/* </div> */}
-                {!showCompleted?<div className='play-pause' style={{display:"flex", gap:"20px", justifyContent:"center"}}>
+                {!showCompleted?(
+                <Timer
+                    task={task}
+                    initialTimeSpent={task.time_spent}
+                    onFetchTask={onFetchTask}
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                />
+            ):null}
+            {/* <div className='play-pause' style={{display:"flex", gap:"20px", justifyContent:"center"}}>
                     <div>
                         {task.time_spent}
                     </div>
                     <span><img src={isPlaying?pause:play} style={{height:"20px", width:"20px"}} onClick={isPlaying?()=>handlePause(task.task_id):()=>handlePlay(task.task_id)}/></span>
-                    {/* <span><img src={pause} style={{height:"20px", width:"20px"}} onClick={()=>handlePause(task.task_id)}/></span> */}
-                </div>:null}
+                    {/* <span><img src={pause} style={{height:"20px", width:"20px"}} onClick={()=>handlePause(task.task_id)}/></span>  </div> */}
             </div>
         // </div>
     // </div>

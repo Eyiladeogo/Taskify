@@ -107,7 +107,7 @@ router.post('/:taskId/pause', authenticateUser, async(req, res)=>{
 
 router.patch('/:taskId/complete', authenticateUser, async (req, res) => {
     const taskId = req.params.taskId;
-    const query = 'UPDATE tasks SET completed = TRUE WHERE task_id = ?';
+    const query = 'UPDATE tasks SET completed = TRUE, time_spent = task_duration WHERE task_id = ?';
     db.query(query, [taskId], (err, result) => {
         if (err) {
             console.error(err);

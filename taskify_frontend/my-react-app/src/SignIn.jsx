@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import './css/login.css'
 import Footer from './Footer';
 import view from './assets/view-password.svg'
 import hide from './assets/hide-password.svg'
+import api from './utils/api';
 
 
 function SignIn(){
@@ -29,7 +30,7 @@ function SignIn(){
         console.log(`FORM DATA :${JSON.stringify(formData)}`)
         
         try {
-          const response = await axios.post('http://localhost:6969/auth/login', formData);
+          const response = await api.post('/auth/login', formData);
           console.log(response.data);
           setErrorExists(false)
           localStorage.setItem('token', response.data);
@@ -53,6 +54,9 @@ function SignIn(){
                 <input type="submit" value="Submit"></input>
                 {errorExists && <h3>Incorrect Username or Password</h3>}
             </form>
+            <div className='register-link'>
+                <p>Don't have an account? <Link to="/register">Register here</Link></p>
+            </div>
           </div>
 
           <Footer/>

@@ -1,5 +1,14 @@
 {
 
+  "name": "taskify-backend",
+  "version": "1.0.0",
+  "description": "Taskify API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+
   "type": "module",
 
   "dependencies": {
@@ -18,11 +27,12 @@
 
     "jsonwebtoken": "^9.0.2",
 
-    "mysql": "^2.18.1",
+    "mysql": "^2.18.1" 
 
+  },
+
+  "devDependencies": {
     "nodemon": "^3.1.0"
-
   }
-
 }
 

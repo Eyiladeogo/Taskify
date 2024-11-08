@@ -1,5 +1,7 @@
 import Navbar from "./Navbar"
 import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -18,9 +20,9 @@ function LogoutButton(){
 }
 
 function Profile(){
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-useEffect(() => {
+  useEffect(() => {
     // Check if token exists in local storage
     const token = localStorage.getItem('token');
     if (token) {
@@ -32,11 +34,11 @@ useEffect(() => {
       if (decodedToken.exp < currentTime) {
         // Token is expired, clear token from local storage and redirect to sign-in page
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/');
       }
     } else {
       // Token doesn't exist, redirect to sign-in page
-      navigate('/login');
+      navigate('/');
     }
   }, [navigate]);
 

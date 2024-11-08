@@ -2,9 +2,10 @@ import { useState } from 'react'
 import Footer from './Footer'
 import axios from 'axios';
 import './css/register.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import view from './assets/view-password.svg'
 import hide from './assets/hide-password.svg'
+import api from './utils/api';
 
 
 function Register(){
@@ -31,10 +32,14 @@ function Register(){
         console.log(`FORM DATA :${JSON.stringify(formData)}`)
 
         try {
-            const response = await axios.post('http://localhost:6969/auth/register', formData);
+            const response = await api.post('/auth/register', formData);
             console.log(response.data);
             setErrorExists(false)
-            navigate('/tasks'); 
+            localStorage.setItem('token', response.data);
+            // Slight delay to ensure token is set before navigation
+            setTimeout(() => {
+            navigate('/tasks');
+      }, 100); // 100ms delay
         } catch (error) {
             setErrorExists(true)
           console.error('Login failed:', error);
@@ -60,6 +65,9 @@ function Register(){
                 <input type="submit" value="Submit"></input>
                 {errorExists && <h3>Something wrong happened! Please try again.</h3>}
             </form>
+            <div className='login-link'>
+                <p>Already have an account? <Link to="/login">Login here</Link></p>
+            </div>
             </div>
             
             <Footer/>

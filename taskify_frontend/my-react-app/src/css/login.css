@@ -6,7 +6,8 @@
   }
   
   .signin-form {
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
     padding: 20px;
     background-color: #f4f4f4;
     border-radius: 10px;
@@ -49,4 +50,48 @@
   margin-top: 10px;
   font-weight: bold; 
   font-size: 15px;
+}
+
+.register-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.register-link p {
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #27251b; /* Same as your navbar color */
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .signin-container {
+      padding: 1em;
+  }
+
+  .signin-form {
+      width: 90%;
+      padding: 1.5em;
+  }
+
+  .signin-form label,
+  .signin-form input[type="text"],
+  .signin-form input[type="password"],
+  .signin-form input[type="submit"] {
+      font-size: 1em;
+  }
+
+  .signin-form h3 {
+      font-size: 1em;
+  }
+
+  .register-link p {
+      font-size: 1em;
+  }
 }
