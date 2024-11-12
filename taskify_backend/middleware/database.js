@@ -6,8 +6,8 @@ config({path: '../.env'});
 
 var db;
 
-if (process.env.JAWSDB_URL) {
-  db = mysql.createConnection(process.env.JAWSDB_URL);
+if (process.env.JAWSDB_MARIA_URL) {
+  db = mysql.createConnection(process.env.JAWSDB_MARIA_URL);
 } 
 else {
     db = mysql.createConnection({
